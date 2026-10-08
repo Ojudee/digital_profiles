@@ -184,13 +184,13 @@ export function openPrintDialogWindow(partners: PartnerRecord[]): void {
  * Download Standalone HTML Dossier (.html):
  * 100% vector fidelity, works completely offline in Chrome/Edge/Safari with Ctrl+P.
  */
-export function downloadStandaloneHtmlDossier(partners: PartnerRecord[]): void {
+export function downloadStandaloneHtmlDossier(partners: PartnerRecord[], filename = 'Company-Profiles-Dossier.html'): void {
   const htmlContent = buildStandaloneDossierHtml(partners, false);
   const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'Company-Partner-Profiles-Dossier.html';
+  a.download = filename;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);

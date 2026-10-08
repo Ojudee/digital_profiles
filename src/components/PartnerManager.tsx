@@ -319,28 +319,42 @@ export const PartnerManager: React.FC<PartnerManagerProps> = ({
           </div>
         </div>
 
-        {/* 3 Document Upload Boxes */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {/* 5 Document Upload Boxes */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <ImageUploadBox
             label="ID Front Image"
             sublabel="Extracts Name, ID No, DOB, Issue, Expiry"
-            badgeText="DOC 1 / 3"
+            badgeText="DOC 1 / 5"
             image={activePartner.idFrontImage}
             onImageChange={(val) => onUpdatePartner(activePartner.id, { idFrontImage: val })}
           />
           <ImageUploadBox
             label="ID Back Image"
             sublabel="Extracts Authority, Address, MRZ & Serial"
-            badgeText="DOC 2 / 3"
+            badgeText="DOC 2 / 5"
             image={activePartner.idBackImage}
             onImageChange={(val) => onUpdatePartner(activePartner.id, { idBackImage: val })}
           />
           <ImageUploadBox
             label="TIN Certificate"
             sublabel="Extracts TIN, Taxpayer Name, Tax Office, Date"
-            badgeText="DOC 3 / 3"
+            badgeText="DOC 3 / 5"
             image={activePartner.tinCertificateImage}
             onImageChange={(val) => onUpdatePartner(activePartner.id, { tinCertificateImage: val })}
+          />
+          <ImageUploadBox
+            label={activePartner.category === 'subcontractor' ? 'Subcontract Agreement' : 'Employment Appointment'}
+            sublabel="Scope of Work, Project Orders & Engagement Terms"
+            badgeText="DOC 4 / 5"
+            image={activePartner.contractOrAgreementImage || null}
+            onImageChange={(val) => onUpdatePartner(activePartner.id, { contractOrAgreementImage: val })}
+          />
+          <ImageUploadBox
+            label="Bank Remittance Mandate"
+            sublabel="Voided Cheque, Bank Statement Header, ACH Mandate"
+            badgeText="DOC 5 / 5"
+            image={activePartner.bankVerificationImage || null}
+            onImageChange={(val) => onUpdatePartner(activePartner.id, { bankVerificationImage: val })}
           />
         </div>
 

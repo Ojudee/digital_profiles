@@ -255,11 +255,15 @@ export function generateUSPassportBio(data: {
   givenNames: string;
   dob: string;
   sex: string;
-  pob: string;
+  pob?: string;
+  placeOfBirth?: string;
+  nationality?: string;
   issueDate: string;
   expiryDate: string;
-  authority: string;
-  signature: string;
+  authority?: string;
+  signature?: string;
+  mrz1?: string;
+  mrz2?: string;
 }): string {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 620" width="920" height="620" style="font-family: Arial, Helvetica, sans-serif;">
     <defs>
@@ -557,3 +561,234 @@ export function generateGambiaTinCertificate(data: {
   </svg>`;
   return svgToDataUrl(svg);
 }
+
+export function generateSubcontractAgreementPreview(data: {
+  contractorName: string;
+  vendorCode: string;
+  scopeOfWork: string;
+  issueDate: string;
+  contractValue: string;
+  whtRate?: string;
+}): string {
+  const contractor = escapeXml(data.contractorName);
+  const vendorCode = escapeXml(data.vendorCode);
+  const scope = escapeXml(data.scopeOfWork);
+  const issueDate = escapeXml(data.issueDate);
+  const value = escapeXml(data.contractValue);
+  const wht = escapeXml(data.whtRate || '10%');
+
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 640" width="940" height="640" style="font-family: Arial, Helvetica, sans-serif;">
+    <rect width="940" height="640" fill="#ffffff"/>
+    <rect x="20" y="20" width="900" height="600" fill="none" stroke="#0f172a" stroke-width="2"/>
+    <rect x="26" y="26" width="888" height="588" fill="none" stroke="#94a3b8" stroke-width="1"/>
+    
+    <!-- Header -->
+    <g transform="translate(50, 45)">
+      <rect x="0" y="0" width="840" height="70" fill="#0f172a" rx="4"/>
+      <text x="420" y="30" fill="#ffffff" font-size="18" font-weight="900" letter-spacing="1.5" text-anchor="middle">APEX INFRASTRUCTURE &amp; ENTERPRISE GROUP</text>
+      <text x="420" y="52" fill="#93c5fd" font-size="12" font-weight="bold" letter-spacing="1" text-anchor="middle">OFFICIAL SUBCONTRACT SERVICE AGREEMENT &amp; COMPLIANCE SCHEDULE</text>
+    </g>
+
+    <!-- Ref & Vendor Bar -->
+    <g transform="translate(50, 130)">
+      <rect width="840" height="34" fill="#f8fafc" stroke="#e2e8f0" rx="3"/>
+      <text x="15" y="22" fill="#475569" font-size="12" font-weight="bold">VENDOR CODE: <tspan fill="#1e3a8a" font-weight="900">${vendorCode}</tspan></text>
+      <text x="500" y="22" fill="#475569" font-size="12" font-weight="bold">CONTRACT EFFECTIVE DATE: <tspan fill="#0f172a" font-weight="900">${issueDate}</tspan></text>
+    </g>
+
+    <!-- Table of Details -->
+    <g transform="translate(50, 180)">
+      <rect width="840" height="230" fill="#ffffff" stroke="#cbd5e1" rx="4"/>
+      <line x1="0" y1="46" x2="840" y2="46" stroke="#e2e8f0" stroke-width="1.5"/>
+      <line x1="0" y1="92" x2="840" y2="92" stroke="#e2e8f0" stroke-width="1.5"/>
+      <line x1="0" y1="138" x2="840" y2="138" stroke="#e2e8f0" stroke-width="1.5"/>
+      <line x1="0" y1="184" x2="840" y2="184" stroke="#e2e8f0" stroke-width="1.5"/>
+      <line x1="240" y1="0" x2="240" y2="230" stroke="#e2e8f0" stroke-width="1.5"/>
+
+      <!-- Row 1 -->
+      <text x="20" y="28" fill="#475569" font-size="12" font-weight="bold">SUBCONTRACTOR ENTITY:</text>
+      <text x="260" y="28" fill="#0f172a" font-size="14" font-weight="900">${contractor}</text>
+
+      <!-- Row 2 -->
+      <text x="20" y="74" fill="#475569" font-size="12" font-weight="bold">SCOPE OF ENGAGEMENT:</text>
+      <text x="260" y="74" fill="#0f172a" font-size="13" font-weight="bold">${scope}</text>
+
+      <!-- Row 3 -->
+      <text x="20" y="120" fill="#475569" font-size="12" font-weight="bold">COMMITTED VALUE / RATE:</text>
+      <text x="260" y="120" fill="#15803d" font-size="14" font-weight="900">${value}</text>
+
+      <!-- Row 4 -->
+      <text x="20" y="166" fill="#475569" font-size="12" font-weight="bold">TAX WITHHOLDING (WHT):</text>
+      <text x="260" y="166" fill="#dc2626" font-size="13" font-weight="bold">${wht} Remitted directly to Domestic Revenue Authority</text>
+
+      <!-- Row 5 -->
+      <text x="20" y="210" fill="#475569" font-size="12" font-weight="bold">COMPLIANCE &amp; LIABILITY:</text>
+      <text x="260" y="210" fill="#0f172a" font-size="12">Verified Trade License, GRA TIN Registration &amp; Site HSE Protocol</text>
+    </g>
+
+    <!-- Signatures -->
+    <g transform="translate(50, 440)">
+      <!-- HR / Operations Side -->
+      <g transform="translate(40, 0)">
+        <text x="0" y="20" fill="#64748b" font-size="11" font-weight="bold">FOR APEX CORPORATE OPERATIONS:</text>
+        <path d="M 0 55 Q 40 25 80 50 T 160 40" fill="none" stroke="#0f172a" stroke-width="2.5"/>
+        <line x1="0" y1="75" x2="260" y2="75" stroke="#94a3b8" stroke-width="1"/>
+        <text x="0" y="94" fill="#0f172a" font-size="12" font-weight="900">Managing Director / Project Lead</text>
+      </g>
+
+      <!-- Accounts Controller Side -->
+      <g transform="translate(480, 0)">
+        <text x="0" y="20" fill="#64748b" font-size="11" font-weight="bold">FOR ACCOUNTS &amp; FINANCE CONTROLLER:</text>
+        <path d="M 0 55 Q 30 15 70 50 T 140 35" fill="none" stroke="#1d4ed8" stroke-width="2.5"/>
+        <line x1="0" y1="75" x2="260" y2="75" stroke="#94a3b8" stroke-width="1"/>
+        <text x="0" y="94" fill="#0f172a" font-size="12" font-weight="900">Chief Financial Controller &amp; Tax Lead</text>
+      </g>
+    </g>
+
+    <!-- Red Official Seal -->
+    <g transform="translate(730, 490)">
+      <circle cx="50" cy="50" r="46" fill="none" stroke="#b91c1c" stroke-width="2" stroke-dasharray="5,3"/>
+      <circle cx="50" cy="50" r="38" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+      <text x="50" y="44" fill="#dc2626" font-size="8" font-weight="bold" text-anchor="middle">LEGAL &amp; ACCOUNTS</text>
+      <text x="50" y="56" fill="#dc2626" font-size="9" font-weight="900" text-anchor="middle">CERTIFIED</text>
+      <text x="50" y="68" fill="#dc2626" font-size="7.5" font-weight="bold" text-anchor="middle">CONTRACT</text>
+    </g>
+  </svg>`;
+  return svgToDataUrl(svg);
+}
+
+export function generateEmploymentContractPreview(data: {
+  employeeName: string;
+  staffId: string;
+  designation: string;
+  department: string;
+  hireDate: string;
+}): string {
+  const name = escapeXml(data.employeeName);
+  const staffId = escapeXml(data.staffId);
+  const designation = escapeXml(data.designation);
+  const dept = escapeXml(data.department);
+  const hireDate = escapeXml(data.hireDate);
+
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 640" width="940" height="640" style="font-family: Arial, Helvetica, sans-serif;">
+    <rect width="940" height="640" fill="#ffffff"/>
+    <rect x="20" y="20" width="900" height="600" fill="none" stroke="#0f172a" stroke-width="2"/>
+    <rect x="26" y="26" width="888" height="588" fill="none" stroke="#94a3b8" stroke-width="1"/>
+
+    <!-- Header -->
+    <g transform="translate(50, 45)">
+      <rect x="0" y="0" width="840" height="70" fill="#0f172a" rx="4"/>
+      <text x="420" y="30" fill="#ffffff" font-size="18" font-weight="900" letter-spacing="1.5" text-anchor="middle">APEX INFRASTRUCTURE &amp; ENTERPRISE GROUP</text>
+      <text x="420" y="52" fill="#86efac" font-size="12" font-weight="bold" letter-spacing="1" text-anchor="middle">HUMAN RESOURCES DEPARTMENT · OFFICIAL APPOINTMENT CERTIFICATE</text>
+    </g>
+
+    <g transform="translate(50, 130)">
+      <rect width="840" height="34" fill="#f8fafc" stroke="#e2e8f0" rx="3"/>
+      <text x="15" y="22" fill="#475569" font-size="12" font-weight="bold">STAFF ID: <tspan fill="#1e3a8a" font-weight="900">${staffId}</tspan></text>
+      <text x="500" y="22" fill="#475569" font-size="12" font-weight="bold">DATE OF ENGAGEMENT: <tspan fill="#0f172a" font-weight="900">${hireDate}</tspan></text>
+    </g>
+
+    <g transform="translate(50, 180)">
+      <rect width="840" height="230" fill="#ffffff" stroke="#cbd5e1" rx="4"/>
+      <line x1="0" y1="46" x2="840" y2="46" stroke="#e2e8f0" stroke-width="1.5"/>
+      <line x1="0" y1="92" x2="840" y2="92" stroke="#e2e8f0" stroke-width="1.5"/>
+      <line x1="0" y1="138" x2="840" y2="138" stroke="#e2e8f0" stroke-width="1.5"/>
+      <line x1="0" y1="184" x2="840" y2="184" stroke="#e2e8f0" stroke-width="1.5"/>
+      <line x1="240" y1="0" x2="240" y2="230" stroke="#e2e8f0" stroke-width="1.5"/>
+
+      <text x="20" y="28" fill="#475569" font-size="12" font-weight="bold">EMPLOYEE FULL NAME:</text>
+      <text x="260" y="28" fill="#0f172a" font-size="14" font-weight="900">${name}</text>
+
+      <text x="20" y="74" fill="#475569" font-size="12" font-weight="bold">OFFICIAL DESIGNATION:</text>
+      <text x="260" y="74" fill="#0f172a" font-size="13" font-weight="bold">${designation}</text>
+
+      <text x="20" y="120" fill="#475569" font-size="12" font-weight="bold">DEPARTMENT / UNIT:</text>
+      <text x="260" y="120" fill="#1e3a8a" font-size="14" font-weight="900">${dept}</text>
+
+      <text x="20" y="166" fill="#475569" font-size="12" font-weight="bold">STATUTORY BENEFITS:</text>
+      <text x="260" y="166" fill="#15803d" font-size="13" font-weight="bold">Social Security, National Pension Fund, Corporate Health Cover, PAYE Remitted</text>
+
+      <text x="20" y="210" fill="#475569" font-size="12" font-weight="bold">HR CLEARANCE STATUS:</text>
+      <text x="260" y="210" fill="#0f172a" font-size="12">Verified Identity, Background Check Cleared, Signed Code of Conduct</text>
+    </g>
+
+    <g transform="translate(50, 440)">
+      <g transform="translate(40, 0)">
+        <text x="0" y="20" fill="#64748b" font-size="11" font-weight="bold">EMPLOYEE SIGNATURE &amp; ACCEPTANCE:</text>
+        <path d="M 0 55 Q 30 15 70 50 T 140 40" fill="none" stroke="#0f172a" stroke-width="2.5"/>
+        <line x1="0" y1="75" x2="260" y2="75" stroke="#94a3b8" stroke-width="1"/>
+        <text x="0" y="94" fill="#0f172a" font-size="12" font-weight="900">${name}</text>
+      </g>
+
+      <g transform="translate(480, 0)">
+        <text x="0" y="20" fill="#64748b" font-size="11" font-weight="bold">HEAD OF HUMAN RESOURCES &amp; PEOPLE:</text>
+        <path d="M 0 55 Q 40 25 80 50 T 160 35" fill="none" stroke="#15803d" stroke-width="2.5"/>
+        <line x1="0" y1="75" x2="260" y2="75" stroke="#94a3b8" stroke-width="1"/>
+        <text x="0" y="94" fill="#0f172a" font-size="12" font-weight="900">Head of People &amp; Corporate Culture</text>
+      </g>
+    </g>
+
+    <g transform="translate(730, 490)">
+      <circle cx="50" cy="50" r="46" fill="none" stroke="#15803d" stroke-width="2" stroke-dasharray="5,3"/>
+      <circle cx="50" cy="50" r="38" fill="none" stroke="#16a34a" stroke-width="1.5"/>
+      <text x="50" y="44" fill="#15803d" font-size="8" font-weight="bold" text-anchor="middle">HUMAN RESOURCES</text>
+      <text x="50" y="56" fill="#15803d" font-size="9" font-weight="900" text-anchor="middle">VERIFIED</text>
+      <text x="50" y="68" fill="#15803d" font-size="7.5" font-weight="bold" text-anchor="middle">PERSONNEL</text>
+    </g>
+  </svg>`;
+  return svgToDataUrl(svg);
+}
+
+export function generateBankVerificationSlip(data: {
+  bankName: string;
+  accountName: string;
+  accountNumber: string;
+  branch: string;
+  currency: string;
+}): string {
+  const bank = escapeXml(data.bankName);
+  const accName = escapeXml(data.accountName);
+  const accNum = escapeXml(data.accountNumber);
+  const branch = escapeXml(data.branch);
+  const cur = escapeXml(data.currency);
+
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 500" width="940" height="500" style="font-family: Arial, Helvetica, sans-serif;">
+    <rect width="940" height="500" fill="#f8fafc"/>
+    <rect x="20" y="20" width="900" height="460" rx="8" fill="#ffffff" stroke="#0284c7" stroke-width="2.5"/>
+    
+    <g transform="translate(50, 40)">
+      <rect width="840" height="50" rx="4" fill="#0369a1"/>
+      <text x="420" y="32" fill="#ffffff" font-size="16" font-weight="900" letter-spacing="1" text-anchor="middle">OFFICIAL BANK REMITTANCE &amp; DISBURSEMENT MANDATE</text>
+    </g>
+
+    <g transform="translate(50, 110)">
+      <rect width="840" height="220" fill="#ffffff" stroke="#cbd5e1" rx="4"/>
+      <line x1="0" y1="55" x2="840" y2="55" stroke="#e2e8f0" stroke-width="1.5"/>
+      <line x1="0" y1="110" x2="840" y2="110" stroke="#e2e8f0" stroke-width="1.5"/>
+      <line x1="0" y1="165" x2="840" y2="165" stroke="#e2e8f0" stroke-width="1.5"/>
+      <line x1="220" y1="0" x2="220" y2="220" stroke="#e2e8f0" stroke-width="1.5"/>
+
+      <text x="20" y="34" fill="#64748b" font-size="12" font-weight="bold">DEPOSITORY INSTITUTION:</text>
+      <text x="240" y="34" fill="#0f172a" font-size="16" font-weight="900">${bank}</text>
+
+      <text x="20" y="89" fill="#64748b" font-size="12" font-weight="bold">ACCOUNT TITLE / BENEFICIARY:</text>
+      <text x="240" y="89" fill="#0f172a" font-size="15" font-weight="bold">${accName}</text>
+
+      <text x="20" y="144" fill="#64748b" font-size="12" font-weight="bold">ACCOUNT NUMBER / IBAN:</text>
+      <text x="240" y="144" fill="#0369a1" font-size="20" font-weight="900" font-family="monospace">${accNum}</text>
+
+      <text x="20" y="198" fill="#64748b" font-size="12" font-weight="bold">BRANCH &amp; CURRENCY:</text>
+      <text x="240" y="198" fill="#0f172a" font-size="13" font-weight="bold">${branch} · <tspan fill="#16a34a">${cur}</tspan></text>
+    </g>
+
+    <g transform="translate(50, 360)">
+      <rect width="840" height="80" rx="4" fill="#f0f9ff" stroke="#bae6fd"/>
+      <text x="25" y="30" fill="#0369a1" font-size="12" font-weight="bold">ACCOUNTS &amp; DISBURSEMENT MANDATE:</text>
+      <text x="25" y="52" fill="#334155" font-size="12">Verified with attached voided cheque/bank letter. Authorized for Electronic Direct Deposit &amp; Payroll ACH.</text>
+      <circle cx="780" cy="40" r="30" fill="#0284c7" opacity="0.15"/>
+      <text x="780" y="44" fill="#0369a1" font-size="10" font-weight="bold" text-anchor="middle">VERIFIED</text>
+    </g>
+  </svg>`;
+  return svgToDataUrl(svg);
+}
+
