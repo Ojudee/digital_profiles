@@ -1,0 +1,6 @@
+{
+  "name": "Company Partner Profile Generator",
+  "description": "Generate official corporate Company Partner Profile documents extracted solely from ID Front, ID Back, and TIN Certificate images.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
