@@ -226,7 +226,7 @@ export const PartnerManager: React.FC<PartnerManagerProps> = ({
           <div>
             <h2 className="text-base font-bold text-slate-900">Partner Profiles Registry</h2>
             <p className="text-xs text-slate-500">
-              Each partner is compiled onto a dedicated Company Partner Profile page.
+              Each partner is compiled onto a dedicated Company Profile page.
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -242,7 +242,7 @@ export const PartnerManager: React.FC<PartnerManagerProps> = ({
         </div>
 
         {/* Tabs */}
-        <div className="flex items-center gap-2 mt-3 overflow-x-auto pb-1">
+        <div className="flex items-center gap-2 mt-3 overflow-x-auto pb-1 touch-pan-x">
           {partners.map((p, idx) => {
             const isActive = p.id === activePartner.id;
             const isCompleted = p.status === 'extracted';

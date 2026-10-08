@@ -113,7 +113,7 @@ export const DocumentViewer: React.FC<DocumentViewerProps> = ({
 
     setEditFormData({
       partnerName: partner.name,
-      documentTitle: partner.documentTitle || 'Company Partner Profile',
+      documentTitle: partner.documentTitle || 'Company Profiles',
       generatedDate: partner.generatedDate,
       fullName: idData?.fullName || '',
       idNumber: idData?.idNumber || '',
@@ -143,7 +143,7 @@ export const DocumentViewer: React.FC<DocumentViewerProps> = ({
 
     onUpdatePartner(partnerId, {
       name: editFormData.partnerName || editFormData.fullName,
-      documentTitle: editFormData.documentTitle || 'Company Partner Profile',
+      documentTitle: editFormData.documentTitle || 'Company Profiles',
       generatedDate: editFormData.generatedDate,
       verificationSignatory: editFormData.verificationSignatory,
       verificationDate: editFormData.verificationDate,
@@ -441,18 +441,15 @@ Confidential – Internal Use Only`;
             key={partner.id}
             id={`partner-page-${partner.id}`}
             data-partner-page="true"
-            className={`w-full max-w-[840px] bg-white text-slate-900 shadow-xl rounded-sm border border-slate-300 overflow-hidden flex flex-col justify-between print:border-none print:shadow-none print:max-w-none print:rounded-none print:p-0 print:m-0 print:min-h-0 print:max-h-none ${
+            className={`w-full max-w-[840px] bg-white text-slate-900 shadow-xl rounded-sm border border-slate-300 overflow-hidden flex flex-col justify-between sm:min-h-[1120px] print:border-none print:shadow-none print:max-w-none print:rounded-none print:p-0 print:m-0 print:min-h-0 print:max-h-none ${
               pageNumber < totalPages ? 'page-break-after' : ''
             }`}
-            style={{
-              minHeight: '1120px',
-            }}
           >
             {/* Top Corporate Accent Bar */}
             <div className="h-2.5 bg-gradient-to-r from-slate-900 via-blue-900 to-slate-800 w-full print:bg-slate-900 shrink-0" />
 
             {/* Inner Content with standard A4 margins */}
-            <div className="p-7 sm:p-9 print:p-4 print:py-3 flex-1 flex flex-col justify-between">
+            <div className="p-3.5 sm:p-7 md:p-9 print:p-4 print:py-3 flex-1 flex flex-col justify-between">
               <div>
                 {/* 1. Cover / Header */}
                 <header className="border-b-2 border-slate-900 pb-3.5 mb-4">
@@ -477,22 +474,22 @@ Confidential – Internal Use Only`;
                             onChange={(e) =>
                               setEditFormData({ ...editFormData, documentTitle: e.target.value })
                             }
-                            placeholder="e.g. Company Partner Profile"
-                            className="w-full text-2xl sm:text-3xl font-serif font-bold text-slate-950 border-b-2 border-blue-500 bg-blue-50/20 px-1 py-0.5 rounded focus:outline-none focus:bg-white"
+                            placeholder="e.g. Company Profiles"
+                            className="w-full text-xl sm:text-2xl md:text-3xl font-serif font-bold text-slate-950 border-b-2 border-blue-500 bg-blue-50/20 px-1 py-0.5 rounded focus:outline-none focus:bg-white"
                           />
                         </div>
                       ) : (
                         <div className="group relative flex items-center gap-2">
                           <input
                             type="text"
-                            value={partner.documentTitle || 'Company Partner Profile'}
+                            value={partner.documentTitle || 'Company Profiles'}
                             onChange={(e) => {
                               if (onUpdatePartner) {
                                 onUpdatePartner(partner.id, { documentTitle: e.target.value });
                               }
                             }}
-                            title="Click to edit Company Partner Profile title"
-                            className="text-2xl sm:text-3xl font-serif font-bold text-slate-950 tracking-tight leading-tight bg-transparent hover:bg-slate-50 focus:bg-white px-1 -mx-1 py-0.5 rounded border border-transparent hover:border-slate-300 focus:border-blue-500 focus:outline-none transition w-full max-w-[580px]"
+                            title="Click to edit Company Profiles title"
+                            className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-slate-950 tracking-tight leading-tight bg-transparent hover:bg-slate-50 focus:bg-white px-1 -mx-1 py-0.5 rounded border border-transparent hover:border-slate-300 focus:border-blue-500 focus:outline-none transition w-full max-w-[580px]"
                           />
                           <span
                             className="no-print opacity-0 group-hover:opacity-100 transition text-slate-400 text-xs flex items-center gap-1 shrink-0 pointer-events-none"
@@ -622,8 +619,8 @@ Confidential – Internal Use Only`;
                   )}
 
                   {/* Identification Details Table (with inline editing support) */}
-                  <div className="overflow-hidden border border-slate-300 rounded-sm mb-3">
-                    <table className="w-full text-left text-xs border-collapse">
+                  <div className="overflow-x-auto border border-slate-300 rounded-sm mb-3">
+                    <table className="w-full min-w-[460px] sm:min-w-0 text-left text-xs border-collapse">
                       <tbody>
                         <tr className="border-b border-slate-200">
                           <th className="w-28 sm:w-36 bg-slate-100/90 px-3 py-1.5 font-semibold text-slate-700 text-[11px] uppercase tracking-wider">
@@ -815,7 +812,7 @@ Confidential – Internal Use Only`;
                   </div>
 
                   {/* Inserted ID Images: ID Front Image and ID Back Image */}
-                  <div className="grid grid-cols-2 gap-3 mb-4 print:mb-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4 print:grid-cols-2 print:mb-2">
                     {/* ID Front */}
                     <div className="image-attachment-card avoid-break border border-slate-300 rounded p-2 bg-slate-50/70 flex flex-col justify-between print:p-1.5 print:break-inside-avoid print:page-break-inside-avoid">
                       <div>
@@ -1083,8 +1080,8 @@ Confidential – Internal Use Only`;
                   )}
 
                   {/* Tax Details Table (with inline editing support) */}
-                  <div className="overflow-hidden border border-slate-300 rounded-sm mb-3">
-                    <table className="w-full text-left text-xs border-collapse">
+                  <div className="overflow-x-auto border border-slate-300 rounded-sm mb-3">
+                    <table className="w-full min-w-[460px] sm:min-w-0 text-left text-xs border-collapse">
                       <tbody>
                         <tr className="border-b border-slate-200">
                           <th className="w-28 sm:w-36 bg-slate-100/90 px-3 py-1.5 font-semibold text-slate-700 text-[11px] uppercase tracking-wider">
@@ -1366,7 +1363,7 @@ Confidential – Internal Use Only`;
                 </section>
 
                 {/* 4. Verification & 5. Attachments Checklist */}
-                <div className="grid grid-cols-2 gap-3 mb-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3 print:grid-cols-2">
                   {/* 4. Verification */}
                   <section className="border border-slate-300 rounded p-3 bg-slate-50/50 flex flex-col justify-between">
                     <div>
